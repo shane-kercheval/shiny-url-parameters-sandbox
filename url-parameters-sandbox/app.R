@@ -17,19 +17,65 @@ ui <- fluidPage(
         
         mainPanel(
             plotOutput("distPlot"),
-            textOutput('url')
+            textOutput('url'),
+            textOutput('reactive_bins'),
+            textOutput('reactive_a'),
+            textOutput('reactive_b'),
+            textOutput('reactive_c')
         )
     )
 )
 # e.g. http://127.0.0.1:5043/?bins=40
 server <- function(input, output, session) {
     # Here you read the URL parameter from session$clientData$url_search
+    temp_reactive_values = reactiveValues(a=NULL, b=1, c=12)
     observe({
+        print(reactiveValuesToList(input))
         query <- parseQueryString(session$clientData$url_search)
         if (!is.null(query[['bins']])) {
             updateSliderInput(session, "bins", value = query[['bins']])
         }
     })
+    
+    output$reactive_bins <- renderText({
+        input$bins
+    })
+    
+    observer_a <- observeEvent(input$bins, {
+        temp_reactive_values$a <- input$bins
+    })
+    
+    
+    
+    observer_b <- observeEvent(temp_reactive_values$b, {
+        print("value=====")
+        print(temp_reactive_values$b)
+        temp_reactive_values$b <- temp_reactive_values$b + 1
+        observer_b$suspend()
+    })
+    
+    # observer_other <- observeEvent(input$bins, {
+    #     if(input$bins == 5) {
+    #         observer_a$suspend()
+    #     }
+    # })
+    
+    output$reactive_a <- renderText({
+        if(temp_reactive_values$a == 5) {
+            observer_b$suspend()
+        }
+        temp_reactive_values$b <- temp_reactive_values$a + 1
+        temp_reactive_values$a
+    })
+    
+    output$reactive_b <- renderText({
+        temp_reactive_values$b
+    })
+    
+    output$reactive_c <- renderText({
+        temp_reactive_values$c
+    })
+    
     
     get_base_url <- function(session) {
         

@@ -1,7 +1,66 @@
 
-url <- httr::parse_url("http://google.com/?bins")
-url$query <- list("bins"=1, "other_setting"="This is another seetting??")
+url <- httr::parse_url("http://127.0.0.1:3158")
+# url$query <- list("bins"=1, "other_setting"="This is another seetting??")
+# httr::build_url(url)
+url$query <- list("data"="Insurance",
+                  "tab"="Graphs",
+                  "variable"="bmi",
+                  "plot_title"="My Title From the URL")
 httr::build_url(url)
+
+
+url <- httr::parse_url("http://127.0.0.1:3158")
+# url$query <- list("bins"=1, "other_setting"="This is another seetting??")
+# httr::build_url(url)
+url$query <- list("data"="Flights",
+                  "tab"="Graphs",
+                  "custom_title"="This is my title from URL parameter",
+                  "variable"="date",
+                  "comparison"="arr_delay",
+                  "color_variable"="dest",
+                  "facet_variable"="origin",
+                  "ts_date_floor"="month")
+httr::build_url(url)
+nchar(httr::build_url(url))
+                  # 'filter_factor_lump_number' = 'as.character(c("Off", seq(1, 10), seq(15, 50, 5))), selected="10")',
+                  # 'label_variables' = 'character(0))',
+                  # 'annotate_points' = 'FALSE)',
+                  # 'show_points' = 'FALSE)',
+                  # 'year_over_year' = 'FALSE)',
+                  # 'include_zero_y_axis' = 'TRUE)',
+                  # 'numeric_graph_type' = '"Boxplot")',
+                  # 'categoric_view_type' = '"Bar")',
+                  # 'order_by_variable' = '"Default")',
+                  # 'show_variable_totals' = 'TRUE)',
+                  # 'show_comparison_totals' = 'TRUE)',
+                  # 'histogram_bins' = '30)',
+                  # 'transparency' = '60)',
+                  # 'jitter' = 'FALSE)',
+                  # 'numeric_aggregation_count_minimum' = '30)',
+                  # 'numeric_show_resampled_conf_int' = 'FALSE)',
+                  # 'trend_line' = 'None)',
+                  # 'trend_line_se' = 'Yes)',
+                  # 'ts_date_floor' = 'names(global__date_part_vector)[1])',
+                  # 'ts_date_break_format' = 'names(global__date_break_format_vector)[1])',
+                  # 'ts_breaks_width' = 'integer(0))',
+                  # 'scale_x_log_base_10' = 'FALSE)',
+                  # 'x_zoom_min' = 'integer(0))',
+                  # 'x_zoom_max' = 'integer(0))',
+                  # 'scale_y_log_base_10' = 'FALSE)',
+                  # 'y_zoom_min' = 'integer(0))',
+                  # 'y_zoom_max' = 'integer(0))',
+                  # 'custom_title' = "var_plots__custom_titlevar_plots__custom_title",
+                  # 'custom_subtitle' = "var_plots__custom_subtitlevar_plots__custom_subtitle",
+                  # 'custom_x_axis_label' = "var_plots__custom_x_axis_labelvar_plots__custom_x_axis_label",
+                  # 'custom_y_axis_label' = "var_plots__custom_y_axis_labelvar_plots__custom_y_axis_label",
+                  # 'custom_caption' = "var_plots__custom_captionvar_plots__custom_caption",
+                  # 'custom_tag' = "var_plots__custom_tagvar_plots__custom_tag",
+                  # 'base_size' = "var_plots__base_sizevar_plots__base_size",
+                  # 'vertical_annotations' = "var_plots__vertical_annotationsvar_plots__vertical_annotations",
+                  # 'horizontal_annotations' = "var_plots__horizontal_annotationsvar_plots__horizontal_annotations",
+                  # 'pretty_text' = "var_plots__pretty_textvar_plots__pretty_text")
+
+
 
 
 url <- httr::parse_url("http://127.0.0.1:5043")
@@ -68,3 +127,9 @@ my_url_list <- list(a=c(1, 2), b="val")
 url$query <- expandUrlArgs(my_url_list)
 httr::build_url(url)
 
+
+
+my_list <- list("var_plots__asdf"=1, "dddd"=2, "var_plots__ffff"=3)
+my_list[grep("var_plots__", names(my_list))]
+
+c(my_list, list("another"="a"))
